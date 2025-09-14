@@ -8,7 +8,7 @@ import { CreationAttributes, Model } from "sequelize";
 type AuthInstance = InstanceType<typeof AuthCode>;
 type AuthCreationAttributes = CreationAttributes<AuthInstance>;
 
-export default class AuthService {
+export default class AuthCodeService {
   constructor() {
     // Para iniciar conexión al instanciar si quieres
     sequelize.authenticate().catch((e) => {
@@ -28,6 +28,10 @@ export default class AuthService {
 
   async getAuths(): Promise<any[]> {
     return await AuthCode.findAll();
+  }
+
+  async getAuthByEmail(email: string): Promise<any | null> {
+    return await AuthCode.findOne({ where: { email } });
   }
 
   async getAuthById(id: UUID): Promise<any | null> {
