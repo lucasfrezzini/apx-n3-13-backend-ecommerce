@@ -1,1 +1,25 @@
+// GET req api/auth
 GET http://localhost:3000/api/auth HTTP/1.1
+
+###
+// GET req api/auth/token
+GET http://localhost:3000/api/auth/token HTTP/1.1
+
+###
+// POST req api/auth
+POST http://localhost:3000/api/auth HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "luquiitas.f@gmail.com"
+}
+
+###
+// POST req api/auth/token
+POST http://localhost:3000/api/auth/token HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "luquiitas.f@gmail.com",
+  "code": "675155"
+}
