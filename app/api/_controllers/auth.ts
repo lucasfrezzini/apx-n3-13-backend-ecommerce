@@ -10,6 +10,8 @@ async function findOrCreateAuth(email: string) {
   const authCodeService = new AuthCodeService();
   const auth = await authCodeService.getAuthByEmail(cleanEmail);
   if (auth) {
+    auth.used = false; // Reseteamos el auth para que pueda ser usado
+    await authCodeService.updateAuth(auth.id, { used: false });
     return auth;
   }
   // Si no hay auth, creamos un user nuevo y un auth nuevo

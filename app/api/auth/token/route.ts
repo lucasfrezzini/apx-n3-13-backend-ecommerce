@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     const validAuth = await verifyAuthCode(email, code);
     if (validAuth === false) {
       return NextResponse.json(
-        { error: "Valid code, try login again" },
+        { error: "Invalid code, try login again" },
         { status: 401 }
       );
     }
