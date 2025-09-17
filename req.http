@@ -56,3 +56,7 @@ Content-Type: application/json
 }
 
 ###
+// GET req api/products/[id]
+GET http://localhost:3000/api/products/50b46a72-e0c9-49fe-b6bc-8f6999d1bcc1 HTTP/1.1
+
+###
