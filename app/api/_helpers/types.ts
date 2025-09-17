@@ -18,7 +18,6 @@ export interface UserType {
 }
 
 export interface ProductType {
-  [key: string]: any;
   id: UUID;
   name: string;
   description?: string;

@@ -34,6 +34,9 @@ export default class UserService {
     return await User.findByPk(id);
   }
 
+  async getUserByEmail(email: string): Promise<any | null> {
+    return await User.findOne({ where: { email } });
+  }
   // Método para sincronizar el modelo (crear tabla) al inicio de app si quieres
   async sync() {
     await sequelize.sync({ alter: true });

@@ -18,7 +18,8 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "resend": "^6.0.3",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "zod": "^4.1.9"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
