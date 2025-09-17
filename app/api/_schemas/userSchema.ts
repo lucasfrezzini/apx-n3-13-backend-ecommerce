@@ -1,5 +1,5 @@
 import { z } from "zod";
-const addressSchema = z
+const userAddressSchema = z
   .object({
     street: z.string().optional(),
     city: z.string().optional(),
@@ -16,7 +16,6 @@ const userSchema = z.object({
     .regex(/^\+\d+$/)
     .optional(), // Ejemplo: validar teléfono con prefijo internacional
   avatarUrl: z.url().optional(),
-  address: addressSchema,
 });
 
-export { userSchema };
+export { userSchema, userAddressSchema };

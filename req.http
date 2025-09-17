@@ -21,27 +21,36 @@ Content-Type: application/json
 
 {
   "email": "luquiitas.f@gmail.com",
-  "code": "134622"
+  "code": "362862"
 }
 ###
 // GET req api/me
 GET http://localhost:3000/api/me HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODA2Nzg3MH0.VRVfNT3BM-xTAQ47daONl1EOz7wxCjqH3QC1YAS4HUM
-###
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODEwNzIyNX0.Rv0DiSclFTxYikpD2rtNv5JWX8OGpek7NoBLjoDPsLE
 
+###
 // PATCH req api/me
 PATCH http://localhost:3000/api/me HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODA2Nzg3MH0.VRVfNT3BM-xTAQ47daONl1EOz7wxCjqH3QC1YAS4HUM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODEwNzIyNX0.Rv0DiSclFTxYikpD2rtNv5JWX8OGpek7NoBLjoDPsLE
 Content-Type: application/json
 
 {
-  "name": "Lucas Quiroz",
+  "name": "Lucas Fzz"
+}
+
+###
+// PATCH req api/me/address
+PATCH http://localhost:3000/api/me/address HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODEwNzIyNX0.Rv0DiSclFTxYikpD2rtNv5JWX8OGpek7NoBLjoDPsLE
+Content-Type: application/json
+
+{
   "address": {
-    "street": "Calle Falsa 123",
-    "city": "Springfield",
-    "state": "IL",
-    "postalCode": "62704",
-    "country": "USA"
+    "street": "Calle Falsa 555",
+    "city": "Corvaro",
+    "state": "L'Aquila",
+    "postalCode": "67050",
+    "country": "Italia"
   }
 
 }
