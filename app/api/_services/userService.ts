@@ -2,6 +2,7 @@ import { User } from "../_models/users";
 import { sequelize } from "../_database/config";
 import { UUID } from "../_helpers/types";
 import { CreationAttributes, Model } from "sequelize";
+import { Order } from "../_database";
 
 // Para poder tipear correctamente los atributos del modelo
 // Obtengo el tipo de instancia del modelo y luego los atributos de creacion
@@ -32,6 +33,10 @@ export default class UserService {
 
   async getUserById(id: UUID): Promise<any | null> {
     return await User.findByPk(id);
+  }
+
+  async getUserOrders(userId: UUID): Promise<any[]> {
+    return await Order.findAll({ where: { userId } });
   }
 
   async getUserByEmail(email: string): Promise<any | null> {

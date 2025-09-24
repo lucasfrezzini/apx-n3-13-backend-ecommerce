@@ -21,8 +21,9 @@ Content-Type: application/json
 
 {
   "email": "luquiitas.f@gmail.com",
-  "code": "362862"
+  "code": "362399"
 }
+
 ###
 // GET req api/me
 GET http://localhost:3000/api/me HTTP/1.1
@@ -58,5 +59,35 @@ Content-Type: application/json
 ###
 // GET req api/products/[id]
 GET http://localhost:3000/api/products/50b46a72-e0c9-49fe-b6bc-8f6999d1bcc1 HTTP/1.1
+
+###
+// GET req api/search?q=shirt&limit=5&offset=0
+GET http://localhost:3000/api/search HTTP/1.1
+
+###
+// GET req api/me/orders
+GET http://localhost:3000/api/me/orders HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODczNDQ1NX0.I203huEKcMWq19yI1N7OvbDPArC8vlgi-Xl5eVfncyY
+
+###
+// POST req api/me/orders
+POST http://localhost:3000/api/me/orders HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODczNDQ1NX0.I203huEKcMWq19yI1N7OvbDPArC8vlgi-Xl5eVfncyY
+Content-Type: application/json
+
+{
+  "orderData" : {
+    "userId": "50b46a72-e0c9-49fe-b6bc-8f6999d1bccc",
+    "productId": "50b46a72-e0c9-49fe-b6bc-8f6999d1bcc1",
+    "quantity": 2,
+    "totalPrice": 10500,
+    "status": "pending"
+  }
+}
+
+###
+// GET req api/order/{orderId}
+GET http://localhost:3000/api/order/e578374f-0366-4610-9cef-ebe266b6da6c HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODczNDQ1NX0.I203huEKcMWq19yI1N7OvbDPArC8vlgi-Xl5eVfncyY
 
 ###

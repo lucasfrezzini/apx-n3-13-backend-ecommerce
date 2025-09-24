@@ -12,17 +12,13 @@
 
 ## GET /search?q=query&offset=0&limit=10
 
-## POST /order?productId={id}
-
-Genera una compra en nuestra base de datos y además genera una orden de pago en MercadoPago. Devuelve una URL de MercadoPago a donde vamos a redigirigir al user para que pague y el orderId.
-
 ## GET /me/orders
-
-Devuelve todas mis ordenes con sus status.
 
 ## GET /order/{orderId}
 
-Devuelve una orden con toda la data incluyendo el estado de la orden.
+## POST /order?productId={id}
+
+Genera una compra en nuestra base de datos y además genera una orden de pago en MercadoPago. Devuelve una URL de MercadoPago a donde vamos a redigirigir al user para que pague y el orderId.
 
 ## POST /ipn/mercadopago
 
