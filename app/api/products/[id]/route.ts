@@ -19,7 +19,7 @@ export async function GET(
     }
     return NextResponse.json({ product }, { status: 200 });
   } catch (error: unknown) {
-    console.error("Error in GET /api/me:", error);
+    console.error("Error in GET /api/products/[id]:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

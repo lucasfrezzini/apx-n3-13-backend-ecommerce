@@ -21,8 +21,6 @@ export class AlgoliaAPI<T> {
     limit: number = 20,
     offset: number = 0
   ): Promise<SearchResults<T>> {
-    console.log("Searching Algolia with:", { query, limit, offset });
-
     const { results } = await this.client.search({
       requests: [
         {

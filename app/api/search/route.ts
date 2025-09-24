@@ -30,7 +30,7 @@ export async function GET(req: NextRequest) {
       { status: 200 }
     );
   } catch (error: unknown) {
-    console.error("Error in GET /api/me:", error);
+    console.error("Error in GET /api/search:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
