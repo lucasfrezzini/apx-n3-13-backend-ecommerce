@@ -6,9 +6,6 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    console.log("GET /api/products/[id] called");
-    console.log("Params:", params);
-
     const { id } = await params;
     if (!id) {
       return NextResponse.json(
