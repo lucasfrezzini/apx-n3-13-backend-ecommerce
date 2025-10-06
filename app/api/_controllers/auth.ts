@@ -16,7 +16,7 @@ async function findOrCreateAuth(email: string) {
   }
   // Si no hay auth, creamos un user nuevo y un auth nuevo
   const user = new UserService();
-  const newUser = await user.createUser({ email: cleanEmail });
+  await user.createUser({ email: cleanEmail });
 
   const newAuth = await authCodeService.createAuth({
     email: cleanEmail,
@@ -43,7 +43,6 @@ export async function sendCodeToEmail(email: string) {
   sendEmail(email, code);
   return auth;
 }
-
 export async function verifyAuthCode(
   email: string,
   code: string

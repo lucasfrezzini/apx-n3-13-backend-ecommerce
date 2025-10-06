@@ -3,6 +3,7 @@ import OrderService from "../_services/orderService";
 
 export async function createOrder(order: OrderType) {
   const orderService = new OrderService();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const newOrder = await orderService.createOrder(order as any);
   if (!newOrder) {
     return null;

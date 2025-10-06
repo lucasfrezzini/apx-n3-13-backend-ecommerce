@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { authMiddleware } from "../../_middlewares/authMiddleware";
 import { getUserOrders } from "../../_controllers/user";
-import { createOrder } from "../../_controllers/order";
-import { OrderType } from "../../_helpers/types";
 
 export async function GET(req: NextRequest) {
   try {

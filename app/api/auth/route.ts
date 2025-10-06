@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     if (!email) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
-    const auth = await sendCodeToEmail(email);
+    await sendCodeToEmail(email);
     return NextResponse.json(
       { message: "Code sent to email" },
       { status: 200 }
