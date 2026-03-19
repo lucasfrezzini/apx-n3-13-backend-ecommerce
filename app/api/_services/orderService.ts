@@ -26,15 +26,15 @@ export default class OrderService {
     return await Order.update(updateData, { where: { id } });
   }
 
-  async getOrders(): Promise<any[]> {
+  async getOrders(): Promise<OrderInstance[]> {
     return await Order.findAll();
   }
 
-  async getOrdersAproved(): Promise<any[]> {
+  async getOrdersAproved(): Promise<OrderInstance[]> {
     return await Order.findAll({ where: { status: "confirmed" } });
   }
 
-  async getOrderById(id: UUID): Promise<any | null> {
+  async getOrderById(id: UUID): Promise<OrderInstance | null> {
     return await Order.findByPk(id);
   }
 

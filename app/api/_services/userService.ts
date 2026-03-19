@@ -2,12 +2,13 @@ import { User } from "../_models/users";
 import { sequelize } from "../_database/config";
 import { UUID } from "../_helpers/types";
 import { CreationAttributes, Model } from "sequelize";
-import { Order } from "../_database";
+import { Order } from "../_models/orders";
 
 // Para poder tipear correctamente los atributos del modelo
 // Obtengo el tipo de instancia del modelo y luego los atributos de creacion
 type UserInstance = InstanceType<typeof User>;
 type UserCreationAttributes = CreationAttributes<UserInstance>;
+type OrderInstance = InstanceType<typeof Order>;
 
 export default class UserService {
   constructor() {
@@ -27,19 +28,19 @@ export default class UserService {
     return await User.update(updateData, { where: { id } });
   }
 
-  async getUsers(): Promise<any[]> {
+  async getUsers(): Promise<UserInstance[]> {
     return await User.findAll();
   }
 
-  async getUserById(id: UUID): Promise<any | null> {
+  async getUserById(id: UUID): Promise<UserInstance | null> {
     return await User.findByPk(id);
   }
 
-  async getUserOrders(userId: UUID): Promise<any[]> {
+  async getUserOrders(userId: UUID): Promise<OrderInstance[]> {
     return await Order.findAll({ where: { userId } });
   }
 
-  async getUserByEmail(email: string): Promise<any | null> {
+  async getUserByEmail(email: string): Promise<UserInstance | null> {
     return await User.findOne({ where: { email } });
   }
   // Método para sincronizar el modelo (crear tabla) al inicio de app si quieres

@@ -22,18 +22,22 @@ export default class ProductService {
 
   async updateProduct(
     id: UUID,
-    updateData: Partial<ProductCreationAttributes>
+    updateData: Partial<ProductCreationAttributes>,
   ) {
     const product = await Product.findByPk(id);
     if (!product) throw new Error("Product not found");
     return await Product.update(updateData, { where: { id } });
   }
 
-  async getProducts(): Promise<any[]> {
+  async getProducts(): Promise<ProductInstance[]> {
     return await Product.findAll();
   }
 
-  async getProductById(id: UUID): Promise<any | null> {
+  async getProductsByCategory(category: string): Promise<ProductInstance[]> {
+    return await Product.findAll({ where: { category } });
+  }
+
+  async getProductById(id: UUID): Promise<ProductInstance | null> {
     return await Product.findByPk(id);
   }
 

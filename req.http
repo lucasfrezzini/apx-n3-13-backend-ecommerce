@@ -1,13 +1,13 @@
 // GET req api/auth
-GET http://localhost:3000/api/auth HTTP/1.1
+GET http://localhost:3001/api/auth HTTP/1.1
 
 ###
 // GET req api/auth/token
-GET http://localhost:3000/api/auth/token HTTP/1.1
+GET http://localhost:3001/api/auth/token HTTP/1.1
 
 ###
 // POST req api/auth
-POST http://localhost:3000/api/auth HTTP/1.1
+POST http://localhost:3001/api/auth HTTP/1.1
 Content-Type: application/json
 
 {
@@ -16,7 +16,7 @@ Content-Type: application/json
 
 ###
 // POST req api/auth/token
-POST http://localhost:3000/api/auth/token HTTP/1.1
+POST http://localhost:3001/api/auth/token HTTP/1.1
 Content-Type: application/json
 
 {
@@ -26,12 +26,12 @@ Content-Type: application/json
 
 ###
 // GET req api/me
-GET http://localhost:3000/api/me HTTP/1.1
+GET http://localhost:3001/api/me HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODEwNzIyNX0.Rv0DiSclFTxYikpD2rtNv5JWX8OGpek7NoBLjoDPsLE
 
 ###
 // PATCH req api/me
-PATCH http://localhost:3000/api/me HTTP/1.1
+PATCH http://localhost:3001/api/me HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODEwNzIyNX0.Rv0DiSclFTxYikpD2rtNv5JWX8OGpek7NoBLjoDPsLE
 Content-Type: application/json
 
@@ -41,7 +41,7 @@ Content-Type: application/json
 
 ###
 // PATCH req api/me/address
-PATCH http://localhost:3000/api/me/address HTTP/1.1
+PATCH http://localhost:3001/api/me/address HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODEwNzIyNX0.Rv0DiSclFTxYikpD2rtNv5JWX8OGpek7NoBLjoDPsLE
 Content-Type: application/json
 
@@ -58,20 +58,28 @@ Content-Type: application/json
 
 ###
 // GET req api/products/[id]
-GET http://localhost:3000/api/products/50b46a72-e0c9-49fe-b6bc-8f6999d1bcc1 HTTP/1.1
+GET http://localhost:3001/api/products/571cb6b7-356c-4aeb-9923-f3fb68945536 HTTP/1.1
+
+###
+// GET req api/products
+GET http://localhost:3001/api/products HTTP/1.1
+
+###
+// GET req api/store/[category]
+GET http://localhost:3001/api/store/bedroom HTTP/1.1.
 
 ###
 // GET req api/search?q=shirt&limit=5&offset=0
-GET http://localhost:3000/api/search HTTP/1.1
+GET http://localhost:3001/api/search HTTP/1.1
 
 ###
 // GET req api/me/orders
-GET http://localhost:3000/api/me/orders HTTP/1.1
+GET http://localhost:3001/api/me/orders HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODczNDQ1NX0.I203huEKcMWq19yI1N7OvbDPArC8vlgi-Xl5eVfncyY
 
 ###
 // POST req api/me/orders
-POST http://localhost:3000/api/me/orders HTTP/1.1
+POST http://localhost:3001/api/me/orders HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODczNDQ1NX0.I203huEKcMWq19yI1N7OvbDPArC8vlgi-Xl5eVfncyY
 Content-Type: application/json
 
@@ -87,7 +95,7 @@ Content-Type: application/json
 
 ###
 // GET req api/order/{orderId}
-GET http://localhost:3000/api/order/e578374f-0366-4610-9cef-ebe266b6da6c HTTP/1.1
+GET http://localhost:3001/api/order/e578374f-0366-4610-9cef-ebe266b6da6c HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODczNDQ1NX0.I203huEKcMWq19yI1N7OvbDPArC8vlgi-Xl5eVfncyY
 
 ###

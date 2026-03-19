@@ -12,5 +12,6 @@ export async function authMiddleware(req: NextRequest) {
   if (!verification) {
     return NextResponse.json({ error: "Invalid token" }, { status: 401 });
   }
+
   return verification;
 }
