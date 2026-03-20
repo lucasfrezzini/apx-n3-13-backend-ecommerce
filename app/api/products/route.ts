@@ -1,21 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProducts } from "../_controllers/products";
+import { handleRoute } from "../_helpers/api-error";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
-  try {
+export async function GET(req: NextRequest) {
+  return handleRoute(async () => {
     const products = await getProducts();
-    if (!products) {
-      return NextResponse.json(
-        { error: "Products not found" },
-        { status: 404 },
-      );
-    }
-    return NextResponse.json({ products }, { status: 200 });
-  } catch (error: unknown) {
-    console.error("Error in GET /api/products/ :", error);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
-  }
+    return NextResponse.json({ success: true, products }, { status: 200 });
+  });
 }

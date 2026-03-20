@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProducts } from "../_controllers/products";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
+export async function GET(req: NextRequest) {
   try {
     const products = await getProducts();
     if (!products) {

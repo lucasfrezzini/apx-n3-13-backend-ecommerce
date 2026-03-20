@@ -1,28 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProductsByCategory } from "../../_controllers/products";
+import { handleRoute, AppError } from "../../_helpers/api-error";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ category: string }> },
 ) {
-  try {
+  return handleRoute(async () => {
     const { category } = await params;
     if (!category) {
-      return NextResponse.json(
-        { error: "Missing Collection parameter" },
-        { status: 400 },
-      );
+      throw new AppError("Missing category parameter", 400, {
+        code: "validation_error",
+      });
     }
+
     const products = await getProductsByCategory(category);
-    if (!products || products.length === 0) {
-      return NextResponse.json(
-        { error: "Collection not found" },
-        { status: 404 },
-      );
-    }
-    return NextResponse.json({ products }, { status: 200 });
-  } catch (error: unknown) {
-    console.error("Error in GET /api/store/[category]:", error);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
-  }
+    return NextResponse.json({ success: true, products }, { status: 200 });
+  });
 }
