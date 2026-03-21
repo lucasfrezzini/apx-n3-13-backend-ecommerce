@@ -80,6 +80,20 @@ const res = await fetch('/api/auth/token', {
 - Respuesta:
   - `200` `{ products: [ ... ] }`
 
+### 2.5 Buscar (Algolia)
+- `GET /api/search?q=<texto>&offset=<page>&limit=<n>`
+- Query params:
+  - `q`: texto de búsqueda (opcional, default `""`)
+  - `offset`: página (>= 0, default `0`)
+  - `limit`: tamaño por página (1-100, default `20`)
+- Respuesta:
+  - `200` `{ success: true, query: "...", page: number, total: number, totalPages: number, hitsPerPage: number, results: [ { objectID, name, description, category, price, stock, previewImage, images, attributes, available, ...} ] }`
+
+### 2.6 Reindexar productos en Algolia
+- `POST /api/search/sync`
+- Respuesta:
+  - `200` `{ success: true, message: "Products synced to Algolia", total: number, synced: number, results: [ { id: string, status: "ok" | "failed", error?: string } ] }`
+
 ---
 
 ## 3) Perfil (requiere token)
@@ -106,23 +120,29 @@ const res = await fetch('/api/auth/token', {
 
 ## 4) Ordenes
 
-### 4.1 Crear orden
+### 4.1 Crear orden / checkout
 - `POST /api/order`
 - Headers:
   - `Authorization: Bearer <token>`
 - Body:
-  - `{ orderData: { userId, productId, quantity, totalPrice, ...opcional } }`
+  - `{ orderData: { items: [{ productId, quantity }], shippingAddress? } }`
 - `orderData` schema (zod):
-  - `userId`: UUID
-  - `productId`: UUID
-  - `quantity`: integer > 0
-  - `totalPrice`: number > 0
-  - `paymentUrl` (string, url, opcional)
-  - `status` (pending | confirmed | cancelled | shipped, opcional)
+  - `items`: arreglo con objetos `{ productId: UUID, quantity: integer > 0 }` (requerido)
   - `shippingAddress` (opcionales: street, city, state, postalCode, country)
-  - `paymentId` (opcional)
 - Respuesta:
-  - `201` `{ success: true, message: 'Order created', order: { ... } }`
+  - `201` `{ success: true, message: 'Checkout created', order: { ... }, paymentUrl, paymentId }`
+
+### 4.2 IPN Mercado Pago
+- `POST /api/ipn/mercadopago`
+- No requiere auth.
+- Body: webhook payload from Mercado Pago. Se usa `data.id` o `id` para buscar pago.
+- Proceso:
+  - Obtiene pago con `GET https://api.mercadopago.com/v1/payments/{paymentId}`.
+  - Encuentra `external_reference` (orderId).
+  - Si `status` es `approved`, actualiza orden a `confirmed`.
+  - Si es otro estado, actualiza orden a `cancelled`.
+- Respuesta:
+  - `200` `{ success: true, message: 'IPN received', orderId, status }`
 
 ---
 

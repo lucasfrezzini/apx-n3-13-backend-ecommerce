@@ -110,12 +110,7 @@ export const apiClient = {
   createOrder: async (
     token: string,
     orderData: {
-      userId: string;
-      productId: string;
-      quantity: number;
-      totalPrice: number;
-      paymentUrl?: string;
-      status?: "pending" | "confirmed" | "cancelled" | "shipped";
+      items: Array<{ productId: string; quantity: number }>;
       shippingAddress?: {
         street?: string;
         city?: string;
@@ -123,10 +118,9 @@ export const apiClient = {
         postalCode?: string;
         country?: string;
       };
-      paymentId?: string;
     },
   ) => {
-    return fetchJson<{ message: string; order: unknown }>("/api/order", {
+    return fetchJson<{ message: string; order: unknown; paymentUrl?: string; paymentId?: string }>("/api/order", {
       method: "POST",
       headers: {
         ...defaultHeaders,
@@ -134,5 +128,26 @@ export const apiClient = {
       },
       body: JSON.stringify({ orderData }),
     });
+  },
+
+  search: async (
+    query: string,
+    options?: { offset?: number; limit?: number },
+  ) => {
+    const params = new URLSearchParams();
+    if (query !== undefined) params.set("q", query);
+    if (options?.offset !== undefined) params.set("offset", String(options.offset));
+    if (options?.limit !== undefined) params.set("limit", String(options.limit));
+    return fetchJson<{ query: string; page: number; total: number; totalPages: number; hitsPerPage: number; results: unknown[] }>(
+      `/api/search?${params.toString()}`,
+      { method: "GET", headers: defaultHeaders },
+    );
+  },
+
+  syncSearchIndex: async () => {
+    return fetchJson<{ message: string; total: number; synced: number; results: { id: string; status: "ok" | "failed"; error?: string }[] }>(
+      "/api/search/sync",
+      { method: "POST", headers: defaultHeaders },
+    );
   },
 };

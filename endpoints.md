@@ -16,10 +16,24 @@
 
 ## GET /order/{orderId}
 
-## POST /order?productId={id}
+## POST /order
 
-Genera una compra en nuestra base de datos y además genera una orden de pago en MercadoPago. Devuelve una URL de MercadoPago a donde vamos a redigirigir al user para que pague y el orderId.
+Genera una compra para un carrito de productos y decrementa stock. Crea una orden de pago en MercadoPago y devuelve `paymentUrl` y `paymentId`.
+
+Body:
+```
+{ "orderData": { "items": [{ "productId": "<id>", "quantity": 2 }], "shippingAddress": { ... } } }
+```
 
 ## POST /ipn/mercadopago
 
-Recibe la señal de MercadoPago para confirmar que el pago fué realizado con éxito. Cambia el estado de la compra en nuestra base y le envía un email al usuario para avisarle que el pago se realizó correctamente. También se debe generar algún aviso hacia quienes deban procesar esta compra. Esto último es algo interno así que puede ser un email o un registro en Airtable.
+Recibe la señal webhook de MercadoPago para marcar la orden como `confirmed` cuando el pago esté aprobado, o `cancelled` en otros estados relevante.
+
+- Endpoint no requiere auth.
+- Espera `body` con `type` y `data.id` (id de pago de MercadoPago).
+- Busca payment con MercadoPago API, lee `external_reference` (orderId).
+- Actualiza orden:
+  - `status: confirmed` si pago aprobado.
+  - `status: cancelled` si pago rechazado o cancelado.
+- Devuelve `{ success: true, orderId, status }`.
+

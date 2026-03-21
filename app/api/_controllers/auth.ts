@@ -3,22 +3,28 @@ import UserService from "../_services/userService";
 import { sendEmail } from "../_helpers/resend";
 import { randomNumber } from "../_helpers/random-number";
 import { addMinutes } from "date-fns";
+import { syncAllModels } from "../_database";
 
 async function findOrCreateAuth(email: string) {
+  await syncAllModels();
   const cleanEmail = email.trim().toLowerCase();
-  // Buscamos si hay un auth creado para ese email
   const authCodeService = new AuthCodeService();
+  const userService = new UserService();
+
   const auth = await authCodeService.getAuthByEmail(cleanEmail);
   if (auth) {
-    auth.used = false; // Reseteamos el auth para que pueda ser usado
+    auth.used = false;
     await authCodeService.updateAuth(auth.id, { used: false });
     return auth;
   }
-  // Si no hay auth, creamos un user nuevo y un auth nuevo
-  const user = new UserService();
-  await user.createUser({ email: cleanEmail });
+
+  const user = await userService.getUserByEmail(cleanEmail);
+  if (!user) {
+    throw new Error("User not found");
+  }
 
   const newAuth = await authCodeService.createAuth({
+    userId: user.get("id") as string,
     email: cleanEmail,
     code: "",
     validUntil: new Date(),

@@ -7,6 +7,7 @@ export const AuthCode = sequelize.define("AuthCode", {
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
   },
+  userId: { type: DataTypes.UUID, allowNull: false },
   email: { type: DataTypes.STRING, allowNull: false },
   code: { type: DataTypes.STRING, allowNull: false },
   validUntil: { type: DataTypes.DATE, allowNull: false },

@@ -30,11 +30,18 @@ export interface ProductType {
   updatedAt?: Date;
 }
 
+export interface OrderItem {
+  productId: UUID;
+  quantity: number;
+  price: number;
+}
+
 export interface OrderType {
   id: UUID;
   userId: UUID;
-  productId: UUID;
-  quantity: number;
+  productId?: UUID;
+  quantity?: number;
+  items?: OrderItem[];
   totalPrice: number;
   paymentUrl?: string;
   status: "pending" | "confirmed" | "cancelled" | "shipped";

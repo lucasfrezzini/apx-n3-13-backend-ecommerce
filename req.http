@@ -75,7 +75,7 @@ GET http://localhost:3001/api/search HTTP/1.1
 ###
 // GET req api/me/orders
 GET http://localhost:3001/api/me/orders HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODczNDQ1NX0.I203huEKcMWq19yI1N7OvbDPArC8vlgi-Xl5eVfncyY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJ1c2VySWQiOiI2Nzg3NjM0OC1hM2Q2LTRhOGYtYjk4YS0wNGY3ODA3M2YzZDQiLCJpYXQiOjE3NzQwNTc4ODB9.vEqLHenM4F6LKcsPOePk6oPB1II12xuYpIZzFgN9How
 
 ###
 // POST req api/me/orders
@@ -99,3 +99,27 @@ GET http://localhost:3001/api/order/e578374f-0366-4610-9cef-ebe266b6da6c HTTP/1.
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imx1cXVpaXRhcy5mQGdtYWlsLmNvbSIsInVzZXJJZCI6IjMzODY1ZDJmLTU5NmYtNDY3My1hMzIyLTEyNWRmNDE0YjJjOSIsImlhdCI6MTc1ODczNDQ1NX0.I203huEKcMWq19yI1N7OvbDPArC8vlgi-Xl5eVfncyY
 
 ###
+
+
+// POST req api/order
+POST http://localhost:3001/api/order HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJ1c2VySWQiOiI2Nzg3NjM0OC1hM2Q2LTRhOGYtYjk4YS0wNGY3ODA3M2YzZDQiLCJpYXQiOjE3NzQwNTc4ODB9.vEqLHenM4F6LKcsPOePk6oPB1II12xuYpIZzFgN9How
+Content-Type: application/json
+
+{
+  "orderData": {
+    "userId": "67876348-a3d6-4a8f-b98a-04f78073f3d4",
+    "items": [
+      {
+        "productId": "19d94d0c-2ffe-4fce-8829-660093cc015a",
+        "quantity": 2
+      },
+      {
+        "productId": "4074b89c-11f0-45b8-9b23-6e1566f32637",
+        "quantity": 1
+      }
+    ],
+    "totalPrice": 15500,
+    "status": "pending"
+  }
+}

@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     }
     const token = generateToken({
       email,
-      userId: validAuth.id,
+      userId: validAuth.userId,
     });
     return NextResponse.json({ success: true, token }, { status: 200 });
   });
