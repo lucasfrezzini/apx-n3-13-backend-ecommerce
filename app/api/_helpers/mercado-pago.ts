@@ -32,7 +32,11 @@ export async function createMercadoPagoPreference(
     payer: {
       email: payerEmail,
     },
-    auto_return: "approved",
+    back_urls: {
+      success: "https://apx-n3-13-backend-ecommerce.vercel.app/success",
+      failure: "https://apx-n3-13-backend-ecommerce.vercel.app/failure",
+      pending: "https://apx-n3-13-backend-ecommerce.vercel.app/pending",
+    },
     external_reference: orderId,
   };
 
