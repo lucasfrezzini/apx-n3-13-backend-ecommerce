@@ -33,9 +33,9 @@ export async function createMercadoPagoPreference(
       email: payerEmail,
     },
     back_urls: {
-      success: process.env.MP_BACK_URL_SUCCESS || "https://example.com/success",
-      failure: process.env.MP_BACK_URL_FAILURE || "https://example.com/failure",
-      pending: process.env.MP_BACK_URL_PENDING || "https://example.com/pending",
+      success: "https://apx-n3-13-backend-ecommerce.vercel.app/success",
+      failure: "https://apx-n3-13-backend-ecommerce.vercel.app/failure",
+      pending: "https://apx-n3-13-backend-ecommerce.vercel.app/pending",
     },
     auto_return: "approved",
     external_reference: orderId,
