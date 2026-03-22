@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AppError, handleRoute } from "../../_helpers/api-error";
 import { Order } from "../../_models/orders";
+import { getMercadoPagoPayment } from "../../_helpers/mercado-pago";
 
 export async function POST(req: NextRequest) {
   return handleRoute(async () => {
@@ -16,31 +17,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const token = process.env.MP_ACCESS_TOKEN;
-    if (!token) {
-      throw new AppError("Missing Mercado Pago token", 500, {
-        code: "missing_mp_token",
-      });
-    }
-
-    const paymentRes = await fetch(
-      `https://api.mercadopago.com/v1/payments/${paymentId}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      },
-    );
-
-    const paymentData = await paymentRes.json().catch(() => null);
-    if (!paymentRes.ok || !paymentData) {
-      throw new AppError("Unable to fetch Mercado Pago payment", 502, {
-        code: "mercadopago_payment_fetch_failed",
-        details: paymentData,
-      });
-    }
+    const paymentData = await getMercadoPagoPayment(paymentId);
 
     const externalReference = paymentData.external_reference;
     if (!externalReference) {
@@ -55,19 +32,19 @@ export async function POST(req: NextRequest) {
     }
 
     const status = (paymentData.status || "").toLowerCase();
-    let updateStatus: "confirmed" | "cancelled" = "cancelled";
+    let updateStatus: "pending" | "confirmed" | "cancelled" = "pending";
 
     if (status === "approved") {
       updateStatus = "confirmed";
     } else if (
-      ["pending", "in_process", "authorized", "in_mediation", "chargeback", "refunded"].includes(status)
+      ["cancelled", "rejected", "refunded", "chargeback"].includes(status)
     ) {
       updateStatus = "cancelled";
     }
 
     await order.update({
       status: updateStatus,
-      paymentId: paymentData.id,
+      paymentId: String(paymentData.id),
     });
 
     return NextResponse.json(
