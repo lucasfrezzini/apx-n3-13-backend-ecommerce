@@ -139,6 +139,7 @@ export async function POST(req: NextRequest) {
     });
 
     const mpItems = orderItems.map((item) => ({
+      id: item.productId,
       title: item.name,
       quantity: item.quantity,
       unit_price: item.price,
@@ -152,7 +153,7 @@ export async function POST(req: NextRequest) {
       createdOrder.getDataValue("id") as string,
     );
 
-    const paymentUrl = preference.sandbox_init_point || preference.init_point;
+    const paymentUrl = preference.init_point || preference.sandbox_init_point;
 
     await createdOrder.update({
       paymentUrl,
