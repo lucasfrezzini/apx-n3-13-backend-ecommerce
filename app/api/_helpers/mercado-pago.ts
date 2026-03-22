@@ -51,6 +51,7 @@ export async function createMercadoPagoPreference(
           failure: "https://apx-n3-13-backend-ecommerce.vercel.app/failure",
           pending: "https://apx-n3-13-backend-ecommerce.vercel.app/pending",
         },
+        notification_url: "https://apx-n3-13-backend-ecommerce.vercel.app/api/ipn/mercadopago",
         external_reference: orderId,
       },
     });
