@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { getProducts, getProductsByCategory } from "../_controllers/products";
 import { handleRoute } from "../_helpers/api-error";
 
+/**
+ * GET /api/products
+ * Lista productos con filtros opcionales:
+ * - category: filtrar por categoría
+ * - random: orden aleatorio
+ * - limit: limitar cantidad
+ * - sort: ordenar (price_asc, price_desc)
+ */
 export async function GET(req: NextRequest) {
   return handleRoute(async () => {
     const { searchParams } = new URL(req.url);
@@ -10,13 +18,9 @@ export async function GET(req: NextRequest) {
     const random = searchParams.get("random");
     const sort = searchParams.get("sort");
 
-    let products;
-
-    if (category) {
-      products = await getProductsByCategory(category);
-    } else {
-      products = await getProducts();
-    }
+    let products = category
+      ? await getProductsByCategory(category)
+      : await getProducts();
 
     if (random === "true") {
       products = products.sort(() => Math.random() - 0.5);
@@ -30,9 +34,9 @@ export async function GET(req: NextRequest) {
     }
 
     if (sort === "price_asc") {
-      products.sort((a: any, b: any) => Number(a.price) - Number(b.price));
+      products.sort((a, b) => Number(a.price) - Number(b.price));
     } else if (sort === "price_desc") {
-      products.sort((a: any, b: any) => Number(b.price) - Number(a.price));
+      products.sort((a, b) => Number(b.price) - Number(a.price));
     }
 
     return NextResponse.json({ success: true, products }, { status: 200 });

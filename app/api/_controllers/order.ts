@@ -2,6 +2,10 @@ import { OrderType, UUID } from "../_helpers/types";
 import { AppError } from "../_helpers/api-error";
 import OrderService from "../_services/orderService";
 
+/**
+ * Crea una nueva orden.
+ * @throws AppError si la creación falla
+ */
 export async function createOrder(order: OrderType) {
   const orderService = new OrderService();
   const newOrder = await orderService.createOrder(order as any);
@@ -11,6 +15,10 @@ export async function createOrder(order: OrderType) {
   return newOrder.toJSON() as OrderType;
 }
 
+/**
+ * Obtiene una orden por su ID.
+ * @throws AppError si no se encuentra la orden
+ */
 export async function getOrder(id: UUID) {
   const orderService = new OrderService();
   const order = await orderService.getOrderById(id);

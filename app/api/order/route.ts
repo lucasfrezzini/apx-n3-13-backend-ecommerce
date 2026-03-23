@@ -2,12 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { authMiddleware } from "../_middlewares/authMiddleware";
 import { Order } from "../_models/orders";
 import { Product } from "../_models/products";
-import { User } from "../_models/users";
 import { sequelize } from "../_database/config";
 import { orderSchema } from "../_schemas/orderSchema";
 import { handleRoute, AppError } from "../_helpers/api-error";
 import { createMercadoPagoPreference } from "../_helpers/mercado-pago";
 
+/**
+ * POST /api/order
+ * Crea una orden y genera preferencia de pago de Mercado Pago.
+ * Requiere autenticación.
+ */
 export async function POST(req: NextRequest) {
   return handleRoute(async () => {
     const authResponse = await authMiddleware(req);
@@ -16,8 +20,6 @@ export async function POST(req: NextRequest) {
     }
 
     const authUser = authResponse as { email?: string; userId?: string };
-    console.log("AuthUser", authUser);
-
     const userId = authUser.userId as string | undefined;
     const userEmail = authUser.email as string | undefined;
 
@@ -34,8 +36,6 @@ export async function POST(req: NextRequest) {
         code: "validation_error",
       });
     }
-
-    console.log("OrderData", orderData);
 
     const validation = orderSchema.safeParse(orderData);
     if (!validation.success) {
@@ -99,9 +99,6 @@ export async function POST(req: NextRequest) {
         code: "validation_error",
       });
     }
-
-    // Asegurar que la tabla Orders está actualizada con la columna items.
-    // await Order.sync({ alter: true });
 
     const createdOrder = await sequelize.transaction(async (transaction) => {
       const newOrder = await Order.create(

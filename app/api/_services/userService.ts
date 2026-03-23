@@ -1,18 +1,15 @@
 import { User } from "../_models/users";
 import { sequelize } from "../_database/config";
 import { UUID } from "../_helpers/types";
-import { CreationAttributes, Model } from "sequelize";
+import { CreationAttributes } from "sequelize";
 import { Order } from "../_models/orders";
 
-// Para poder tipear correctamente los atributos del modelo
-// Obtengo el tipo de instancia del modelo y luego los atributos de creacion
 type UserInstance = InstanceType<typeof User>;
 type UserCreationAttributes = CreationAttributes<UserInstance>;
 type OrderInstance = InstanceType<typeof Order>;
 
 export default class UserService {
   constructor() {
-    // Para iniciar conexión al instanciar si quieres
     sequelize.authenticate().catch((e) => {
       console.error("Unable to connect to the database:", e);
     });
@@ -43,7 +40,7 @@ export default class UserService {
   async getUserByEmail(email: string): Promise<UserInstance | null> {
     return await User.findOne({ where: { email } });
   }
-  // Método para sincronizar el modelo (crear tabla) al inicio de app si quieres
+
   async sync() {
     await sequelize.sync({ alter: true });
   }

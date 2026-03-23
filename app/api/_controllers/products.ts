@@ -3,6 +3,10 @@ import { AppError } from "../_helpers/api-error";
 import { productCreateSchema } from "../_schemas/productSchema";
 import ProductService from "../_services/productService";
 
+/**
+ * Obtiene un producto por su ID.
+ * @throws AppError si no se encuentra el producto
+ */
 export async function getOneProduct(id: UUID): Promise<ProductType> {
   const productService = new ProductService();
   const product = await productService.getProductById(id);
@@ -12,12 +16,18 @@ export async function getOneProduct(id: UUID): Promise<ProductType> {
   return product.toJSON() as ProductType;
 }
 
+/**
+ * Obtiene todos los productos.
+ */
 export async function getProducts(): Promise<ProductType[]> {
   const productService = new ProductService();
   const products = await productService.getProducts();
   return products.map((p) => p.toJSON() as ProductType);
 }
 
+/**
+ * Obtiene productos filtrados por categoría.
+ */
 export async function getProductsByCategory(
   category: string,
 ): Promise<ProductType[]> {
@@ -26,6 +36,10 @@ export async function getProductsByCategory(
   return products.map((p) => p.toJSON() as ProductType);
 }
 
+/**
+ * Crea un nuevo producto con validación de esquema.
+ * @throws AppError si la validación falla o la creación falla
+ */
 export async function createProduct(
   product: Omit<ProductType, "id">,
 ): Promise<ProductType> {
