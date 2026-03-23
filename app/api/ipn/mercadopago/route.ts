@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AppError, handleRoute } from "../../_helpers/api-error";
 import { Order } from "../../_models/orders";
+import { Product } from "../../_models/products";
+import { sequelize } from "../../_database/config";
 import { getMercadoPagoPayment } from "../../_helpers/mercado-pago";
 
 export async function POST(req: NextRequest) {
@@ -40,6 +42,26 @@ export async function POST(req: NextRequest) {
       ["cancelled", "rejected", "refunded", "chargeback"].includes(status)
     ) {
       updateStatus = "cancelled";
+    }
+
+    if (updateStatus === "confirmed") {
+      await sequelize.transaction(async (transaction) => {
+        const items = order.getDataValue("items") as Array<{
+          productId: string;
+          quantity: number;
+        }>;
+
+        for (const item of items) {
+          const product = await Product.findByPk(item.productId, { transaction });
+          if (product) {
+            const stock = product.getDataValue("stock") as number;
+            await product.update(
+              { stock: Math.max(0, stock - item.quantity) },
+              { transaction },
+            );
+          }
+        }
+      });
     }
 
     await order.update({

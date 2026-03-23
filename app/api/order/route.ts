@@ -104,24 +104,6 @@ export async function POST(req: NextRequest) {
     // await Order.sync({ alter: true });
 
     const createdOrder = await sequelize.transaction(async (transaction) => {
-      for (const item of orderItems) {
-        const product = await Product.findByPk(item.productId, { transaction });
-        if (!product) {
-          throw new AppError(`Product ${item.productId} not found`, 404, {
-            code: "product_not_found",
-          });
-        }
-        const stock = product.getDataValue("stock") as number;
-        if (stock < item.quantity) {
-          throw new AppError(
-            `Product ${item.productId} has not enough stock`,
-            400,
-            { code: "insufficient_stock" },
-          );
-        }
-        await product.update({ stock: stock - item.quantity }, { transaction });
-      }
-
       const newOrder = await Order.create(
         {
           userId,
