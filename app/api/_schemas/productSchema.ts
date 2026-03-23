@@ -8,6 +8,7 @@ export const productSchema = z.object({
   images: z.array(z.string().url()).optional(),
   category: z.string().min(1, "Category is required"),
   attributes: z.record(z.string(), z.any()).optional(),
+  isNew: z.boolean().optional(),
 });
 
 export const productCreateSchema = productSchema;

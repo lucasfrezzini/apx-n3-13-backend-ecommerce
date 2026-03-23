@@ -42,6 +42,7 @@ export type Product = {
   images?: string[];
   attributes?: Record<string, string>;
   available: boolean;
+  isNew?: boolean;
   createdAt: string;
   updatedAt: string;
 };

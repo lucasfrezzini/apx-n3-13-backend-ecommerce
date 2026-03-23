@@ -13,5 +13,6 @@ export const Product = sequelize.define("Product", {
   stock: { type: DataTypes.INTEGER, defaultValue: 0 },
   images: { type: DataTypes.JSON }, // array de URL strings
   category: { type: DataTypes.STRING },
-  attributes: { type: DataTypes.JSON }, // características adicionales
+  attributes: { type: DataTypes.JSON },
+  isNew: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
