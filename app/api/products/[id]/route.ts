@@ -9,15 +9,15 @@ export async function GET(
     const { id } = await params;
     if (!id) {
       return NextResponse.json(
-        { error: "Missing id parameter" },
+        { success: false, error: "Missing id parameter" },
         { status: 400 }
       );
     }
     const product = await getOneProduct(id);
     if (!product) {
-      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+      return NextResponse.json({ success: false, error: "Product not found" }, { status: 404 });
     }
-    return NextResponse.json({ product }, { status: 200 });
+    return NextResponse.json({ success: true, product }, { status: 200 });
   } catch (error: unknown) {
     console.error("Error in GET /api/products/[id]:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
