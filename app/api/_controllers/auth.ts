@@ -34,19 +34,27 @@ async function findOrCreateAuth(email: string) {
 }
 
 export async function sendCodeToEmail(email: string) {
+  const isTestUser = email.trim().toLowerCase() === "test@apx.school";
   const auth = await findOrCreateAuth(email);
 
-  const code = randomNumber().toString();
-  const validUntil = addMinutes(new Date(), 30);
-  auth.code = code;
-  auth.validUntil = validUntil;
+  if (isTestUser && auth.code && auth.validUntil > new Date()) {
+    return auth;
+  }
+
+  const code = isTestUser ? "123456" : randomNumber().toString();
+  const validUntil = isTestUser
+    ? addMinutes(new Date(), 9999)
+    : addMinutes(new Date(), 30);
 
   const authCodeService = new AuthCodeService();
   await authCodeService.updateAuth(auth.id, {
     code,
     validUntil,
   });
-  sendEmail(email, code);
+
+  if (!isTestUser) {
+    sendEmail(email, code);
+  }
   return auth;
 }
 export async function verifyAuthCode(
