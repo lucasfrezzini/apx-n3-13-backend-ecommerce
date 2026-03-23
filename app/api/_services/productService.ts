@@ -24,14 +24,17 @@ export default class ProductService {
   }
 
   async getProducts(): Promise<ProductInstance[]> {
+    await sequelize.sync({ alter: true });
     return await Product.findAll();
   }
 
   async getProductsByCategory(category: string): Promise<ProductInstance[]> {
+    await sequelize.sync({ alter: true });
     return await Product.findAll({ where: { category } });
   }
 
   async getProductById(id: UUID): Promise<ProductInstance | null> {
+    await sequelize.sync({ alter: true });
     return await Product.findByPk(id);
   }
 

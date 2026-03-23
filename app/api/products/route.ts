@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProducts, getProductsByCategory } from "../_controllers/products";
-import { handleRoute } from "../_helpers/api-error";
 
 /**
  * GET /api/products
@@ -11,7 +10,7 @@ import { handleRoute } from "../_helpers/api-error";
  * - sort: ordenar (price_asc, price_desc)
  */
 export async function GET(req: NextRequest) {
-  return handleRoute(async () => {
+  try {
     const { searchParams } = new URL(req.url);
     const category = searchParams.get("category");
     const limit = searchParams.get("limit");
@@ -40,5 +39,11 @@ export async function GET(req: NextRequest) {
     }
 
     return NextResponse.json({ success: true, products }, { status: 200 });
-  });
+  } catch (error) {
+    console.error("Error in GET /api/products:", error);
+    return NextResponse.json(
+      { success: false, error: { message: "Server error", code: "server_error" } },
+      { status: 500 }
+    );
+  }
 }
