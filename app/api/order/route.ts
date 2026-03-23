@@ -46,9 +46,13 @@ export async function POST(req: NextRequest) {
     }
 
     const parsed = validation.data;
-    const items = parsed.items?.length
-      ? parsed.items
-      : [{ productId: parsed.productId!, quantity: parsed.quantity! }];
+    const items = parsed.items;
+
+    if (!items || items.length === 0) {
+      throw new AppError("At least one item is required", 400, {
+        code: "validation_error",
+      });
+    }
 
     const orderItems = [] as Array<{
       productId: string;
@@ -104,8 +108,6 @@ export async function POST(req: NextRequest) {
       const newOrder = await Order.create(
         {
           userId,
-          productId: orderItems.length === 1 ? orderItems[0].productId : null,
-          quantity: orderItems.length === 1 ? orderItems[0].quantity : null,
           items: orderItems,
           totalPrice,
           status: "pending",

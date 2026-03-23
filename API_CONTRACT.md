@@ -134,8 +134,6 @@ GET /api/products?sort=price_desc
   {
     "orderData": {
       "items": [{ "productId": "uuid", "quantity": 1 }],
-      "productId": "uuid", (alternativo para un solo producto)
-      "quantity": 1,
       "shippingAddress": {
         "street": "...",
         "city": "...",

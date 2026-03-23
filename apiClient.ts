@@ -58,8 +58,6 @@ export type OrderItem = {
 export type Order = {
   id: string;
   userId: string;
-  productId?: string;
-  quantity?: number;
   items: OrderItem[];
   totalPrice: number;
   status: "pending" | "confirmed" | "cancelled" | "shipped";
@@ -233,9 +231,7 @@ export const apiClient = {
   createOrder: async (
     token: string,
     orderData: {
-      items?: Array<{ productId: string; quantity: number }>;
-      productId?: string;
-      quantity?: number;
+      items: Array<{ productId: string; quantity: number }>;
       shippingAddress?: Address;
     },
   ): Promise<FetchResult<{ message: string; order: Order; paymentUrl: string; paymentId: string }>> => {

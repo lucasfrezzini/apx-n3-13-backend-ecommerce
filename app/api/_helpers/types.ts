@@ -38,14 +38,13 @@ export interface OrderItem {
   productId: UUID;
   quantity: number;
   price: number;
+  name: string;
 }
 
 export interface OrderType {
   id: UUID;
   userId: UUID;
-  productId?: UUID;
-  quantity?: number;
-  items?: OrderItem[];
+  items: OrderItem[];
   totalPrice: number;
   paymentUrl?: string;
   status: "pending" | "confirmed" | "cancelled" | "shipped";
