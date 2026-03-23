@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     }
     const orders = await getUserOrders(authResponse.email as string);
     return NextResponse.json(
-      { orders, quantity: orders?.length },
+      { success: true, orders, quantity: orders?.length },
       { status: 200 }
     );
   } catch (error: unknown) {

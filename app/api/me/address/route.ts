@@ -22,7 +22,7 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
     return NextResponse.json(
-      { message: "User Address Updated" },
+      { success: true, message: "User Address Updated" },
       { status: 200 }
     );
   } catch (error: unknown) {
