@@ -7,9 +7,6 @@ import { sequelize } from "./config";
 User.hasMany(Order, { foreignKey: "userId" });
 Order.belongsTo(User, { foreignKey: "userId" });
 
-Product.hasMany(Order, { foreignKey: "productId" });
-Order.belongsTo(Product, { foreignKey: "productId" });
-
 export { User, Product, Order, AuthCode };
 
 export const syncAllModels = async () => {
