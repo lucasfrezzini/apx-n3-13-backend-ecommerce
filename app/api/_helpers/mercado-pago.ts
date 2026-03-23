@@ -47,9 +47,9 @@ export async function createMercadoPagoPreference(
           email: payerEmail,
         },
         back_urls: {
-          success: "https://apx-n3-13-backend-ecommerce.vercel.app/success",
-          failure: "https://apx-n3-13-backend-ecommerce.vercel.app/failure",
-          pending: "https://apx-n3-13-backend-ecommerce.vercel.app/pending",
+          success: process.env.MP_FRONT_URL_SUCCESS || "https://apx-n3-13-backend-ecommerce.vercel.app/success",
+          failure: process.env.MP_FRONT_URL_FAILURE || "https://apx-n3-13-backend-ecommerce.vercel.app/failure",
+          pending: process.env.MP_FRONT_URL_PENDING || "https://apx-n3-13-backend-ecommerce.vercel.app/pending",
         },
         notification_url: "https://apx-n3-13-backend-ecommerce.vercel.app/api/ipn/mercadopago",
         external_reference: orderId,
