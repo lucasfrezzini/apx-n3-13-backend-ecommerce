@@ -23,9 +23,13 @@ export interface ProductType {
   description?: string;
   price: number;
   stock: number;
-  images?: string[]; // URLs
+  images?: {
+    product: string[];
+    dimensions?: string;
+  };
   category?: string;
-  attributes?: Record<string, any>; // características adicionales
+  attributes?: Record<string, any>;
+  isNew?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }

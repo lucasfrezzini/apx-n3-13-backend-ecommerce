@@ -5,7 +5,12 @@ export const productSchema = z.object({
   description: z.string().optional(),
   price: z.number().nonnegative("Price must be positive"),
   stock: z.number().int().nonnegative("Stock must be a non-negative integer"),
-  images: z.array(z.string().url()).optional(),
+  images: z
+    .object({
+      product: z.array(z.string()),
+      dimensions: z.string().optional(),
+    })
+    .optional(),
   category: z.string().min(1, "Category is required"),
   attributes: z.record(z.string(), z.any()).optional(),
   isNew: z.boolean().optional(),

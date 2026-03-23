@@ -38,10 +38,11 @@ export type Product = {
   price: number;
   stock: number;
   category?: string;
-  previewImage?: string;
-  images?: string[];
+  images?: {
+    product: string[];
+    dimensions?: string;
+  };
   attributes?: Record<string, string>;
-  available: boolean;
   isNew?: boolean;
   createdAt: string;
   updatedAt: string;
