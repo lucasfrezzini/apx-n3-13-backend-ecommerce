@@ -51,8 +51,9 @@ export type Product = {
 export type OrderItem = {
   productId: string;
   quantity: number;
-  price: number;
-  name: string;
+  price?: number;
+  name?: string;
+  image?: string;
 };
 
 export type Order = {

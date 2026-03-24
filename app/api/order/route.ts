@@ -59,6 +59,7 @@ export async function POST(req: NextRequest) {
       quantity: number;
       price: number;
       name: string;
+      image?: string;
     }>;
 
     let totalPrice = 0;
@@ -72,7 +73,7 @@ export async function POST(req: NextRequest) {
       }
       const stock = product.getDataValue("stock") as number;
       const priceRaw = product.getDataValue("price");
-      const price = Number(priceRaw);
+      const price = item.price ?? Number(priceRaw);
       if (Number.isNaN(price) || price <= 0) {
         throw new AppError(
           `Product ${product.getDataValue("id")} has invalid price`,
@@ -93,7 +94,8 @@ export async function POST(req: NextRequest) {
         productId: item.productId,
         quantity: item.quantity,
         price,
-        name: product.getDataValue("name") as string,
+        name: item.name ?? (product.getDataValue("name") as string),
+        image: item.image,
       });
       totalPrice += price * item.quantity;
     }

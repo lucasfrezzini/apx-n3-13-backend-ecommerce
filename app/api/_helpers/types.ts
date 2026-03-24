@@ -37,8 +37,9 @@ export interface ProductType {
 export interface OrderItem {
   productId: UUID;
   quantity: number;
-  price: number;
-  name: string;
+  price?: number;
+  name?: string;
+  image?: string;
 }
 
 export interface OrderType {

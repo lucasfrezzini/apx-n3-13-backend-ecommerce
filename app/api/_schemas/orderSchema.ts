@@ -3,6 +3,9 @@ import { z } from "zod";
 const orderItemSchema = z.object({
   productId: z.string().uuid("productId must be a valid UUID"),
   quantity: z.number().int().positive("quantity must be positive integer"),
+  name: z.string().optional(),
+  price: z.number().optional(),
+  image: z.string().optional(),
 });
 
 export const orderSchema = z.object({
