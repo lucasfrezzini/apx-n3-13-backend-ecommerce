@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyAuthCode } from "../../_controllers/auth";
 import { generateToken } from "../../_helpers/jsonwebtoken";
 import { handleRoute, AppError } from "../../_helpers/api-error";
+import UserService from "../../_services/userService";
 
 // Recibe un email y un código y valida que sean los correctos. En el caso de que sean correctos devuelve un token e invalida el código.
 export async function POST(req: NextRequest) {
@@ -19,9 +20,16 @@ export async function POST(req: NextRequest) {
         code: "invalid_auth_code",
       });
     }
+
+    const userService = new UserService();
+    const user = await userService.getUserByEmail(email);
+    if (!user) {
+      throw new AppError("User not found", 404, { code: "user_not_found" });
+    }
+
     const token = generateToken({
       email,
-      userId: validAuth.userId,
+      userId: user.get("id") as string,
     });
     return NextResponse.json({ success: true, token }, { status: 200 });
   });
