@@ -11,27 +11,9 @@ const ALGOLIA_INDEX_NAME = "algolia_kora_dataset";
 const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_SEARCH_API_KEY);
 const algoliaClient = new AlgoliaAPI<any>(client, ALGOLIA_INDEX_NAME);
 
-function normalizeImageUrl(url: unknown): string | null {
-  if (typeof url !== "string") {
-    return null;
-  }
-  const trimmed = url.trim();
-  if (!trimmed) {
-    return null;
-  }
-  if (/^https?:\/\//i.test(trimmed)) {
-    return trimmed;
-  }
-  return `https://${trimmed.replace(/^\/+/, "")}`;
-}
-
 function toAlgoliaRecord(product: any) {
-  const rawImages: unknown[] = Array.isArray(product.images) ? product.images : [];
-  const parsedImages = rawImages
-    .map((item: unknown) => normalizeImageUrl(item))
-    .filter((url): url is string => typeof url === "string");
-
-  const previewImage = parsedImages.length > 0 ? parsedImages[0] : null;
+  const images = product.images?.product || [];
+  const image = images[0] || null;
 
   return {
     objectID: product.id,
@@ -40,10 +22,8 @@ function toAlgoliaRecord(product: any) {
     category: product.category,
     price: Number(product.price),
     stock: Number(product.stock),
-    previewImage,
-    images: parsedImages,
+    image,
     attributes: product.attributes || {},
-    available: Number(product.stock) > 0,
     createdAt: product.createdAt,
     updatedAt: product.updatedAt,
   };
