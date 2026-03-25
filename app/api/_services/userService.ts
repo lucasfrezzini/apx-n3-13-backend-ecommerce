@@ -34,7 +34,10 @@ export default class UserService {
   }
 
   async getUserOrders(userId: UUID): Promise<OrderInstance[]> {
-    return await Order.findAll({ where: { userId } });
+    return await Order.findAll({ 
+      where: { userId },
+      order: [['createdAt', 'DESC']]
+    });
   }
 
   async getUserByEmail(email: string): Promise<UserInstance | null> {
